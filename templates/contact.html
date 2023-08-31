@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Contact | Home
+{% endblock %}
+
+{% block main %}
+
+
+    <!-- Page content-->
+    <section class="py-5">
+        <div class="container px-5">
+            <!-- Contact form-->
+            <div class="bg-light rounded-3 mt-5 py-5 px-4 px-md-5 mb-5">
+                <div class="text-center mt-3 mb-5">
+                    <h1 class="fw-bolder">Get in touch</h1>
+                    <p class="lead fw-normal text-muted mb-0">We'd love to hear from you</p>
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6">
+
+                        <form id="contactForm" action="/contact" method="POST">
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter your first name..." required />
+                                <label for="first_name">First name</label>
+                            </div>
+                            <!-- Last Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter your last name..." required />
+                                <label for="last_name">Last name</label>
+                            </div>
+                            <!-- Email address input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" required />
+                                <label for="email">Email address</label>
+                            </div>
+                            <!-- Phone number input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="phone" name="phone" type="tel" placeholder="(123) 456-7890" required />
+                                <label for="phone">Phone number</label>
+                            </div>
+                            <!-- Message input-->
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="message" name="message" type="text" placeholder="Enter your message here..." style="height: 10rem" required></textarea>
+                                <label for="message">Message</label>
+                            </div>
+
+                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button></div>
+                        </form>
+                    </div>  
+                </div>
+            </div>
+            <!-- Contact cards-->
+            <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5" style="justify-content: center;">
+                <div class="col">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                    <div class="h5">Email us</div>
+                    <p class="text-muted mb-0">For business inqueries email us at business@shpemdc.com</p>
+                </div>
+                
+                <div class="col">
+                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telephone"></i></div>
+                    <div class="h5">Call us</div>
+                    <p class="text-muted mb-0">Call us during normal business hours at (786) 397-4692.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

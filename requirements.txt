@@ -1,0 +1,5 @@
+Flask
+pycodestyle
+pylint
+python-dotenv
+mysql-connector-python

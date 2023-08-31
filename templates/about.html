@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    About | Home
+{% endblock %}
+
+{% block main %}
+
+
+   <!-- Header-->
+   <header class="py-5">
+    <div class="container px-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xxl-6">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder mb-3">Empowering the Hispanic Community in STEM</h1>
+                    <p class="lead fw-normal text-muted mb-4">Our focus is on uplifting and supporting the Hispanic community in STEM by increasing awareness, providing access to resources, promoting professional development, and fostering a sense of community among members.</p>
+                    <a class="btn btn-primary btn-lg" href="#scroll-target">Read our story</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- About section one-->
+<section class="py-5 bg-light" id="scroll-target">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="{{ url_for('static', filename='./assets/images/founders.png') }}" alt="Founders of SHPE" /></div>
+            <div class="col-lg-6">
+                <h2 class="fw-bolder">Our Founding</h2>
+                <p class="lead fw-normal text-muted mb-0">Our founders recognized the importance of representation and support for Hispanic students within the STEM field and decided to establish this chapter club as a resource for their peers. The club has grown and evolved since its inception, becoming a leading organization in the field. We are proud of the impact we have made and continue to make in the STEM field, and specifically in the Hispanic community at Miami Dade College.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About section two-->
+<section class="py-5">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="{{ url_for('static', filename='./assets/images/growth.png') }}" alt="Image of SHPE graduate" /></div>
+            <div class="col-lg-6">
+                <h2 class="fw-bolder">Growth &amp; Beyond</h2>
+                <p class="lead fw-normal text-muted mb-0">Our mission at MDC SHPE is to empower and support our members in reaching their full potential through professional development, networking opportunities, and community building. Join our community and discover the endless possibilities that come with growing and expanding your horizons.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Team members section-->
+<section class="py-5 bg-light">
+    <div class="container px-5 my-5">
+        <div class="text-center">
+            <h2 class="fw-bolder">Leadership</h2>
+            <p class="lead fw-normal text-muted mb-5">Dedicated to quality and your success</p>
+        </div>
+        <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
+            <div class="col mb-5 mb-5 mb-xl-0">
+                <div class="text-center">
+                    <h5 class="fw-bolder">Alex Arguelles</h5>
+                    <div class="fst-italic text-muted">President</div>
+                </div>
+            </div>
+            <div class="col mb-5 mb-5 mb-xl-0">
+                <div class="text-center">
+                    <h5 class="fw-bolder">Kevin Pino</h5>
+                    <div class="fst-italic text-muted">President of Internal Affairs</div>
+                </div>
+            </div>
+            <div class="col mb-5 mb-5 mb-sm-0">
+                <div class="text-center">
+                    <h5 class="fw-bolder">Emilio Laurenti</h5>
+                    <div class="fst-italic text-muted">President of External Affairs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

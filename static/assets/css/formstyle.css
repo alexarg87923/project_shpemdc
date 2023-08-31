@@ -1,0 +1,8 @@
+.btn-long {
+    width: 300px;
+}
+
+.btn-primary {
+  background-color: rgb(24, 112, 184) !important;
+  border-color: rgb(24, 112, 184) !important;
+}

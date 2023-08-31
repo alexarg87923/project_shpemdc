@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Secret Form | Home
+{% endblock %}
+
+{% block head %}
+  <link href="{{ url_for('static', filename='./assets/css/formstyle.css') }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
+
+{% block main %}
+
+<div class="container h-100">
+  <div class="row justify-content-center align-items-center h-100">
+    <div class="col-md-6">
+      <form class="mt-5 pt-5" action='/addtoschedule' method="POST">
+        <div class="form-row">
+          <div class="form-group mt-2">
+            <label for="event_name">Event Name</label>
+            <input type="text" class="form-control" name="event_name" id="event_name" autocomplete='off'>
+          </div>
+          <div class="form-group mt-2">
+            <label for="start_time">Start Time</label>
+            <input type="text" class="form-control" name="start_time" id="start_time" autocomplete='off' placeholder="EXAMPLE: 5:30 PM">
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <label for="end_time">End Time</label>
+          <input type="text" class="form-control" name="end_time" id="end_time" autocomplete='off' placeholder="EXAMPLE: 6:30 PM">
+        </div>
+        
+        <div class="form-group mt-2">
+          <label for="year">Year</label>
+          <input type="number" class="form-control" name="year" id="year" autocomplete='off' placeholder="EXAMPLE: 2023">
+        </div>
+
+          <div class="form-group mt-2">
+            <label for="month" class="form-label">Month</label>
+            <select class="form-select" name="month" id="month">
+              {% for i in range(1, 13) %}
+                <option value="{{i}}">{{i}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group mt-2">
+            <label for="day" class="form-label">Day</label>
+            <select class="form-select" name="day" id="day">
+              {% for i in range(1, 32) %}
+                <option value="{{i}}">{{i}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group mt-2">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" autocomplete='off' placeholder="Password provided by Alex">
+          </div>
+
+        <button type="submit" class="btn btn-primary mt-4 mb-5">Add Event</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#day').select2({
+        width: '100%'
+    });
+});
+
+$(document).ready(function() {
+  $('#month').select2({
+      width: '100%'
+  });
+});
+</script>
+{% endblock %}
