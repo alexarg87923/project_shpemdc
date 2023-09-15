@@ -3,3 +3,4 @@ pycodestyle
 pylint
 python-dotenv
 mysql-connector-python
+gunicorn
