@@ -1,9 +1,3 @@
-"""
-This module demonstrates how to interact with an SQLite3 database in Python.
-
-It provides functions for creating, reading, updating, and
-deleting data in the database.
-"""
 import os
 import mysql.connector
 from flask import Flask, render_template, request
@@ -52,12 +46,6 @@ def after_request(response) -> None:
 
 @app.route("/")
 def index() -> str:
-    """
-    This function is called when you go to root route '/'
-
-    Returns:
-        str: an html rendering of index
-    """
     logger.info('Request received for "/" route',
                 extra=create_extra_dict(request))
     return render_template("index.html")
@@ -65,12 +53,6 @@ def index() -> str:
 
 @app.route("/about")
 def about() -> str:
-    """
-    This function is called when you visit '/about' the about page
-
-    Returns:
-        str: an html rendering of the about page
-    """
     logger.info('Request received for "/about" route',
                 extra=create_extra_dict(request))
     return render_template("about.html")
@@ -78,12 +60,6 @@ def about() -> str:
 
 @app.route("/wip")
 def wip() -> str:
-    """
-    This function is called when you visit '/wip' the wip page
-
-    Returns:
-        str: an html rendering of the wip page
-    """
     logger.info('Request received for "/wip" route',
                 extra=create_extra_dict(request))
     return render_template("wip.html")
@@ -91,12 +67,6 @@ def wip() -> str:
 
 @app.route("/error")
 def error() -> str:
-    """
-    This function is called when you visit '/error' which is an error page
-
-    Returns:
-        str: an html rendering of the error page
-    """
     logger.info('Request received for "/error" route',
                 extra=create_extra_dict(request))
     return render_template("error.html")
@@ -104,12 +74,6 @@ def error() -> str:
 
 @app.route("/contact", methods=["GET", "POST"])
 def calender() -> str:
-    """
-    This function returns a string representing a calendar.
-
-    Returns:
-        str: A string representation of a calendar.
-    """
     logger.info('Request received for "/contact" route',
                 extra=create_extra_dict(request))
     
@@ -191,12 +155,6 @@ def calender() -> str:
 
 @app.route("/schedule")
 def calendar() -> str:
-    """
-    This function returns the calendar page '/schedule'
-
-    Returns:
-        str: A string html representation of the calendar page
-    """
     logger.info('Request received for "/schedule" route',
                 extra=create_extra_dict(request))
 
@@ -227,10 +185,7 @@ def calendar() -> str:
 def event_form():
     """
     This is a secret route to be able to add events to the calendar
-
-    Returns:
-        str: the html page for the form
-    """
+	"""
     logger.info('Request received for "/addtoschedule" route',
                 extra=create_extra_dict(request))
     
