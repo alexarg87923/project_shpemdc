@@ -17,10 +17,10 @@ logger = create_logger()
 
 # Database config
 config = {
-      "host": "localhost",
+      "host": os.getenv("DB_HOST"),
       "user": os.getenv("DB_USER"),
       "password": os.getenv("DB_PASS"),
-      "database": os.getenv("DB_DB")
+      "database": os.getenv("DB_NAME")
     }
 
 # Global variables
@@ -188,7 +188,7 @@ def event_form():
 	"""
     logger.info('Request received for "/addtoschedule" route',
                 extra=create_extra_dict(request))
-    
+
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
 
@@ -257,6 +257,53 @@ def event_form():
 
     return render_template("addtoschedule.html")
 
+def init_tables() -> None:
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    try:
+        print('Fetching tables...')
+        cursor.execute("""SHOW TABLES""")
+        result = cursor.fetchall()
+
+        if not result:
+            print('Tables were not found...')
+            print('Creating contact...')
+            cursor.execute("""
+                CREATE TABLE contact (
+                    first_name VARCHAR(255),
+                    last_name VARCHAR(255),
+                    email VARCHAR(255),
+                    phone VARCHAR(255),
+                    message VARCHAR(255)
+                )
+            """)
+            print('Creating events...')
+            cursor.execute("""
+                CREATE TABLE events (
+                    occasion VARCHAR(255),
+                    startTime TIME,
+                    endTime TIME,
+                    year INT,
+                    month INT,
+                    day INT
+                )
+            """)
+    except Exception as e:
+        print(e)
+        return render_template(
+            "error.html",
+            error="Error initializing tables."
+        )
+    finally:
+        if cursor is not None:
+            cursor.close()
+
+        connection.close()
+
+
 
 if __name__ == '__main__':
+    init_tables()
     app.run(port=3001)
+else:
+    init_tables()

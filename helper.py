@@ -32,8 +32,6 @@ def create_logger() -> logging:
     Returns:
         logger: logger that takes a string to be saved in log file
     """
-    # create a logger with the specified name
-
     logger = logging.getLogger('my_logger')
     logger.setLevel(logging.INFO)
 
@@ -42,13 +40,13 @@ def create_logger() -> logging:
                     ' - %(url)s - %(method)s%(input)s'
                     )
 
-    file_handler = logging.FileHandler('app.log')
-    file_handler.setFormatter(formatter)
+    # uncomment if you want logs to be saved to file.
+    # file_handler = logging.FileHandler('app.log')
+    # file_handler.setFormatter(formatter)
+    # logger.addHandler(file_handler)
 
     stream_handler = logging.StreamHandler(sys.stdout)
     stream_handler.setFormatter(formatter)
-
-    logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
 
     return logger
