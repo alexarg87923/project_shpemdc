@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Script to start the docker-compose services
+# Script to stop the docker-compose services
 
-echo "Starting SHPE MDC Docker services..."
+echo "Stopping SHPE MDC Docker services..."
 
 # Check if docker-compose is available
 if ! command -v docker-compose &> /dev/null; then
@@ -16,11 +16,9 @@ else
     COMPOSE_CMD="docker-compose"
 fi
 
-# Start the services
-$COMPOSE_CMD up -d --build
+# Stop the services
+$COMPOSE_CMD down
 
 echo ""
-echo "Services started!"
-echo "To view logs: docker-compose logs -f"
-echo "To stop services: docker-compose down"
+echo "Services stopped!"
 

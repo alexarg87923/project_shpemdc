@@ -23,6 +23,10 @@ config = {
       "database": os.getenv("DB_NAME")
     }
 
+# Table names from environment variables
+TABLE_CONTACT = os.getenv("TABLE_CONTACT", "contact")
+TABLE_EVENTS = os.getenv("TABLE_EVENTS", "events")
+
 # Global variables
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 invalidChar = [';', '\'', '\"', '}', ')', ']', '`']
@@ -125,7 +129,7 @@ def calender() -> str:
                             )
             # Insert values into DB
             cursor.execute(
-                """insert into contact
+                f"""insert into {TABLE_CONTACT}
                 (first_name, last_name, email, phone, message)
                 values (%s, %s, %s, %s, %s)""",
                 list_of_input
@@ -162,7 +166,7 @@ def calendar() -> str:
     cursor = connection.cursor()
     
     try:
-        sql = "SELECT * FROM events"
+        sql = f"SELECT * FROM {TABLE_EVENTS}"
         cursor.execute(sql)
         result = cursor.fetchall()
         processed_events_data = [process_event_data(event) for event in result]
@@ -229,7 +233,7 @@ def event_form():
 
             # Insert values into DB
             cursor.execute(
-                """insert into events
+                f"""insert into {TABLE_EVENTS}
                 (occasion, startTime, endTime, year, month, day)
                 values (%s, %s, %s, %s, %s, %s)""",
                 user_input_list
@@ -267,9 +271,9 @@ def init_tables() -> None:
 
         if not result:
             print('Tables were not found...')
-            print('Creating contact...')
-            cursor.execute("""
-                CREATE TABLE contact (
+            print(f'Creating {TABLE_CONTACT}...')
+            cursor.execute(f"""
+                CREATE TABLE {TABLE_CONTACT} (
                     first_name VARCHAR(255),
                     last_name VARCHAR(255),
                     email VARCHAR(255),
@@ -277,9 +281,9 @@ def init_tables() -> None:
                     message VARCHAR(255)
                 )
             """)
-            print('Creating events...')
-            cursor.execute("""
-                CREATE TABLE events (
+            print(f'Creating {TABLE_EVENTS}...')
+            cursor.execute(f"""
+                CREATE TABLE {TABLE_EVENTS} (
                     occasion VARCHAR(255),
                     startTime TIME,
                     endTime TIME,

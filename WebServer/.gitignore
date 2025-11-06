@@ -1,0 +1,11 @@
+env
+__pycache__
+.vscode
+.env
+
+.pylintrc
+app.log
+
+connect.*
+
+*.sql

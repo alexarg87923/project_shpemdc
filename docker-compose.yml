@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mysql:
+    build:
+      context: ./MySQLContainer
+      dockerfile: Dockerfile
+    container_name: mysql-production
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB_NAME}
+      MYSQL_USER: ${MYSQL_DB_USER}
+      MYSQL_PASSWORD: ${MYSQL_DB_PASSWORD}
+      # Custom env vars for init script
+      MYSQL_DB_NAME: ${MYSQL_DB_NAME}
+      MYSQL_DB_USER: ${MYSQL_DB_USER}
+      MYSQL_DB_PASSWORD: ${MYSQL_DB_PASSWORD}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - shpemdc-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  webserver:
+    build:
+      context: ./WebServer
+      dockerfile: Dockerfile
+    container_name: shpemdc-production
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      PASSWORD: ${PASSWORD}
+      TABLE_CONTACT: ${TABLE_CONTACT}
+      TABLE_EVENTS: ${TABLE_EVENTS}
+    ports:
+      - "${WEB_PORT:-8000}:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - shpemdc-network
+
+volumes:
+  mysql_data:
+
+networks:
+  shpemdc-network:
+    driver: bridge
+
