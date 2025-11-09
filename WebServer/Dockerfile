@@ -10,5 +10,6 @@ COPY ./templates ./templates
 COPY ./helper.py .
 COPY ./app.py .
 
-CMD ["./env/bin/gunicorn", "-b", "0.0.0.0:8000", "app:app"]
+# Use PORT environment variable if set, otherwise default to 8000
+CMD ./env/bin/gunicorn -b "0.0.0.0:${PORT:-8000}" app:app
 EXPOSE 8000
