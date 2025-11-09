@@ -1,4 +1,5 @@
 import os
+import time
 import mysql.connector
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
@@ -262,47 +263,63 @@ def event_form():
     return render_template("addtoschedule.html")
 
 def init_tables() -> None:
-    connection = mysql.connector.connect(**config)
-    cursor = connection.cursor()
-    try:
-        print('Fetching tables...')
-        cursor.execute("""SHOW TABLES""")
-        result = cursor.fetchall()
+    """Initialize database tables with retry logic for container startup"""
+    max_retries = 10
+    retry_delay = 3
+    
+    for attempt in range(max_retries):
+        try:
+            connection = mysql.connector.connect(**config)
+            cursor = connection.cursor()
+            try:
+                print('Fetching tables...')
+                cursor.execute("""SHOW TABLES""")
+                result = cursor.fetchall()
 
-        if not result:
-            print('Tables were not found...')
-            print(f'Creating {TABLE_CONTACT}...')
-            cursor.execute(f"""
-                CREATE TABLE {TABLE_CONTACT} (
-                    first_name VARCHAR(255),
-                    last_name VARCHAR(255),
-                    email VARCHAR(255),
-                    phone VARCHAR(255),
-                    message VARCHAR(255)
-                )
-            """)
-            print(f'Creating {TABLE_EVENTS}...')
-            cursor.execute(f"""
-                CREATE TABLE {TABLE_EVENTS} (
-                    occasion VARCHAR(255),
-                    startTime TIME,
-                    endTime TIME,
-                    year INT,
-                    month INT,
-                    day INT
-                )
-            """)
-    except Exception as e:
-        print(e)
-        return render_template(
-            "error.html",
-            error="Error initializing tables."
-        )
-    finally:
-        if cursor is not None:
-            cursor.close()
-
-        connection.close()
+                if not result:
+                    print('Tables were not found...')
+                    print(f'Creating {TABLE_CONTACT}...')
+                    cursor.execute(f"""
+                        CREATE TABLE {TABLE_CONTACT} (
+                            first_name VARCHAR(255),
+                            last_name VARCHAR(255),
+                            email VARCHAR(255),
+                            phone VARCHAR(255),
+                            message VARCHAR(255)
+                        )
+                    """)
+                    print(f'Creating {TABLE_EVENTS}...')
+                    cursor.execute(f"""
+                        CREATE TABLE {TABLE_EVENTS} (
+                            occasion VARCHAR(255),
+                            startTime TIME,
+                            endTime TIME,
+                            year INT,
+                            month INT,
+                            day INT
+                        )
+                    """)
+                    connection.commit()
+                print('Tables initialized successfully!')
+                return
+            except Exception as e:
+                print(f'Error initializing tables: {e}')
+                raise
+            finally:
+                if cursor is not None:
+                    cursor.close()
+                connection.close()
+        except mysql.connector.Error as e:
+            if attempt < max_retries - 1:
+                print(f'Database connection failed (attempt {attempt + 1}/{max_retries}): {e}')
+                print(f'Retrying in {retry_delay} seconds...')
+                time.sleep(retry_delay)
+            else:
+                print(f'Failed to connect to database after {max_retries} attempts: {e}')
+                raise
+        except Exception as e:
+            print(f'Unexpected error during table initialization: {e}')
+            raise
 
 
 
